@@ -52,10 +52,10 @@ end
 
 
 % Final calculation.
-for x=1:size(InputImage,1)
+for a=1:size(InputImage,1)
     
-    for y=1:size(InputImage,2)        
-            HistImage(x,y)=OpZeros(InputImage(x,y)+1);
+    for b=1:size(InputImage,2)        
+            HistImage(a,b)=OpZeros(InputImage(a,b)+1);
     end
     
 end

@@ -10,16 +10,16 @@ w=5; sig_s=8; sig_r=0.2;
 Domain_filter = exp(-(A.^2+B.^2)/(2*sig_s^2));
 
 % Apply bilateral filter.
-dim = size(InputImage);
-Z = zeros(dim);
-for x = 1:dim(1)
-   for y = 1:dim(2)
+d = size(InputImage);
+Z = zeros(d);
+for x = 1:d(1)
+   for y = 1:d(2)
       
          % Extract local region.
          x_Min = max(x-w,1);
-         x_Max = min(x+w,dim(1));
+         x_Max = min(x+w,d(1));
          y_Min = max(y-w,1);
-         y_Max = min(y+w,dim(2));
+         y_Max = min(y+w,d(2));
          I = InputImage(x_Min:x_Max,y_Min:y_Max,:);
       
          % Compute Gaussian range weights.
