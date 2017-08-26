@@ -2,80 +2,80 @@
 
 close all;
 clc; 
-I = imread('grayscale-image.jpg');
-Ir=I(:,:,1); 
-Ig=I(:,:,2); 
-Ib=I(:,:,3); 
+InputImage = imread('grayscale-image.jpg');
+AR=InputImage(:,:,1); 
+AG=InputImage(:,:,2); 
+AB=InputImage(:,:,3); 
 
 G = 192; 
 b = -30; 
 alpha = 125; 
 beta = 46; 
-Ir_double=double(Ir); 
+AR_double=double(AR); 
 
 sigma=65;    
 
-[x,y]=meshgrid((-(size(Ir,2)-1)/2):(size(Ir,2)/2),(-(size(Ir,1)-1)/2):(size(Ir,1)/2));   
+[x,y]=meshgrid((-(size(AR,2)-1)/2):(size(AR,2)/2),(-(size(AR,1)-1)/2):(size(AR,1)/2));   
 gauss=exp(-(x.^2+y.^2)/(2*sigma*sigma));   
 Gauss=gauss/sum(gauss(:));   
  
 %R% 
-Ir_log=log(Ir_double+1);  
-f_Ir=fft2(Ir_double);  
+AR_log=log(AR_double+1);  
+F_Ar=fft2(AR_double);  
 
-fgauss=fft2(Gauss,size(Ir,1),size(Ir,2)); 
-fgauss=fftshift(fgauss);   
-Rr=ifft2(fgauss.*f_Ir);   
-min1=min(min(Rr)); 
-Rr_log= log(Rr - min1+1); 
-Rr1=Ir_log-Rr_log;  
+F_Gauss=fft2(Gauss,size(AR,1),size(AR,2)); 
+F_Gauss=fftshift(F_Gauss);   
+Fr=ifft2(F_Gauss.*F_Ar);   
+Min_1=min(min(Fr)); 
+Fr_log= log(Fr - Min_1+1); 
+Fr1=AR_log-Fr_log;  
 
-SSR1=Rr1;
+SSR_1=Fr1;
 %SSR:
-min1 = min(min(SSR1)); 
-max1 = max(max(SSR1)); 
-SSR1 = uint8(255*(SSR1-min1)/(max1-min1)); 
+Min_1 = min(min(SSR_1)); 
+Max_1 = max(max(SSR_1)); 
+SSR_1 = uint8(255*(SSR_1-Min_1)/(Max_1-Min_1)); 
 
 %G% 
-Ig_double=double(Ig); 
-Ig_log=log(Ig_double+1);  
-f_Ig=fft2(Ig_double);  
+AG_double=double(AG); 
+AG_log=log(AG_double+1);  
+F_Ag=fft2(AG_double);  
 
-fgauss=fft2(Gauss,size(Ig,1),size(Ig,2)); 
-fgauss=fftshift(fgauss);  
-Rg= ifft2(fgauss.*f_Ig);  
-min2=min(min(Rg)); 
-Rg_log= log(Rg-min2+1); 
-Rg1=Ig_log-Rg_log;  
+F_Gauss=fft2(Gauss,size(AG,1),size(AG,2)); 
+F_Gauss=fftshift(F_Gauss);  
+Fg= ifft2(F_Gauss.*F_Ag);  
+Min_2=min(min(Fg)); 
+Fg_log= log(Fg-Min_2+1); 
+Fg1=AG_log-Fg_log;  
 
-SSR2=Rg1;
+SSR_2=Fg1;
 %SSR:
-min2 = min(min(SSR2)); 
-max2 = max(max(SSR2)); 
-SSR2 = uint8(255*(SSR2-min2)/(max2-min2)); 
+Min_2 = min(min(SSR_2)); 
+Max_1 = max(max(SSR_2)); 
+SSR_2 = uint8(255*(SSR_2-Min_2)/(Max_1-Min_2)); 
 
  
 %B% 
-Ib_double=double(Ib); 
-Ib_log=log(Ib_double+1); 
-f_Ib=fft2(Ib_double); 
+AB_double=double(AB); 
+AB_log=log(AB_double+1); 
+F_Ab=fft2(AB_double); 
 
-fgauss=fft2(Gauss,size(Ib,1),size(Ib,2)); 
-fgauss=fftshift(fgauss); 
-Rb= ifft2(fgauss.*f_Ib); 
-min3=min(min(Rb)); 
-Rb_log= log(Rb-min3+1); 
-Rb1=Ib_log-Rb_log; 
+F_Gauss=fft2(Gauss,size(AB,1),size(AB,2)); 
+F_Gauss=fftshift(F_Gauss); 
+Fb= ifft2(F_Gauss.*F_Ab); 
+Min_3=min(min(Fb)); 
+Fb_log= log(Fb-Min_3+1); 
+Fb1=AB_log-Fb_log; 
 
-SSR3 = Rb1;
+SSR_3 = Fb1;
 %SSR:
-min3 = min(min(SSR3)); 
-max3 = max(max(SSR3)); 
-SSR3 = uint8(255*(SSR3-min3)/(max3-min3));
+Min_3 = min(min(SSR_3)); 
+Max_3 = max(max(SSR_3)); 
+SSR_3 = uint8(255*(SSR_3-Min_3)/(Max_3-Min_3));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ssr = cat(3,SSR1,SSR2,SSR3);
-figure,imshow(I);title('Original Image')  
-figure,imshow(ssr);title('SSR Output Image')
-imwrite(ssr,'matlab/OutputImages/Retinex.jpg');
+SSR = cat(3,SSR_1,SSR_2,SSR_3);
+figure,imshow(InputImage);title('Original Image')  
+figure,imshow(SSR);title('SSR Output Image')
+imwrite(SSR,'matlab/OutputImages/Retinex.jpg');

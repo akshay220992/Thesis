@@ -1,29 +1,27 @@
 close all;
 clc;
 
+InputImage=imread('wom2.jpg');
+imwrite(InputImage,'matlab/InputImages/test_01.jpg');
 
-% Image File Read.
-ImageData=imread('wom2.jpg');
-imwrite(ImageData,'matlab/InputImages/test_01.jpg');
 
-% Define scaling constant.
-Constant=0.3;
-d=double(ImageData);
+Constant=0.3;%scaling constant
+d_Image=double(InputImage);
             
 
-% Image Matrix.
-[X,Y]=size(ImageData);
+% Matrix of Image pixels.
+[A,B]=size(InputImage);
 
-        for a = 1:X
+        for x = 1:A
             
-            for b = 1:Y
-                m=d(a,b);
-                OutputImage(a,b)=Constant.*log10(1+m);
+            for y = 1:B
+                z=d_Image(x,y);
+                L(x,y)=Constant.*log10(1+z);
                 
             end
             
         end
         
-figure,imshow(ImageData);title(' Original Image: ');       
+figure,imshow(InputImage);title(' Original Image: ');       
 figure, imshow(OutputImage);title(' Log Mapping Output Image: ');
 imwrite(OutputImage,'matlab/OutputImages/LogMap.jpg');

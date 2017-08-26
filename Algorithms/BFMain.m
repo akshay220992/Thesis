@@ -1,43 +1,43 @@
 close all;
 clc;
 
-%Image File Read
-A=double(imread('grayscale-image.jpg'));
-A=A/255;
-w=5; sigma_d=4; sigma_r=1;
+InputImage=double(imread('tire.pnm'));
+InputImage=InputImage/255;
+w=5; sig_s=8; sig_r=0.2;
 
 % Pre-compute Gaussian domain weights.
-[X,Y] = meshgrid(-w:w,-w:w);
-Domain_fil = exp(-(X.^2+Y.^2)/(2*sigma_d^2));
+[A,B] = meshgrid(-w:w,-w:w);
+Domain_filter = exp(-(A.^2+B.^2)/(2*sig_s^2));
 
 % Apply bilateral filter.
-dim = size(A);
-B = zeros(dim);
-for i = 1:dim(1)
-   for j = 1:dim(2)
+dim = size(InputImage);
+Z = zeros(dim);
+for x = 1:dim(1)
+   for y = 1:dim(2)
       
          % Extract local region.
-         iMin = max(i-w,1);
-         iMax = min(i+w,dim(1));
-         jMin = max(j-w,1);
-         jMax = min(j+w,dim(2));
-         I = A(iMin:iMax,jMin:jMax,:);
+         x_Min = max(x-w,1);
+         x_Max = min(x+w,dim(1));
+         y_Min = max(y-w,1);
+         y_Max = min(y+w,dim(2));
+         I = InputImage(x_Min:x_Max,y_Min:y_Max,:);
       
          % Compute Gaussian range weights.
-         dL = I(:,:,1)-A(i,j,1); 
-         da = I(:,:,2)-A(i,j,2); 
-         db = I(:,:,3)-A(i,j,3); 
-         Range_fil = exp(-(dL.^2+da.^2+db.^2)/(2*sigma_r^2));
+         dL = I(:,:,1)-InputImage(x,y,1); 
+         da = I(:,:,2)-InputImage(x,y,2); 
+         db = I(:,:,3)-InputImage(x,y,3); 
+         Range_filter = exp(-(dL.^2+da.^2+db.^2)/(2*sig_r^2));
       
          % Calculate bilateral filter response.
-         F = Range_fil.*Domain_fil((iMin:iMax)-i+w+1,(jMin:jMax)-j+w+1);
-         norm_F = sum(F(:));
-         B(i,j,1) = sum(sum(F.*I(:,:,1)))/norm_F;
-         B(i,j,2) = sum(sum(F.*I(:,:,2)))/norm_F;
-         B(i,j,3) = sum(sum(F.*I(:,:,3)))/norm_F;
+         BF = Range_filter.*Domain_filter((x_Min:x_Max)-x+w+1,(y_Min:y_Max)-y+w+1);
+         norm_BF = sum(BF(:));
+         Z(x,y,1) = sum(sum(BF.*I(:,:,1)))/norm_BF;
+         Z(x,y,2) = sum(sum(BF.*I(:,:,2)))/norm_BF;
+         Z(x,y,3) = sum(sum(BF.*I(:,:,3)))/norm_BF;
                 
    end
 end
-figure,imshow(A);title(' Original Image: ');
-figure,imshow(B);title('Output Image after Bilateral Filtering');
-imwrite(B,'matlab/OutputImages/BilateralFilter.jpg');
+figure,imshow(InputImage);title('Original Image');
+figure,imshow(Z);title('Final Image after Bilateral Filtering');
+NoOfPixelBF=size(Z,1)*size(Z,2);
+imwrite(Z,'matlab/OutputImages/BilateralFilter.jpg');

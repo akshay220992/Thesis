@@ -1,30 +1,5 @@
+%Code built from snippets from https://uk.mathworks.com%
 function varargout = Compare(varargin)
-% COMPARE MATLAB code for Compare.fig
-%      COMPARE, by itself, creates a new COMPARE or raises the existing
-%      singleton*.
-%
-%      H = COMPARE returns the handle to a new COMPARE or the handle to
-%      the existing singleton*.
-%
-%      COMPARE('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in COMPARE.M with the given input arguments.
-%
-%      COMPARE('Property','Value',...) creates a new COMPARE or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before Compare_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to Compare_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
-
-% Edit the above text to modify the response to help Compare
-
-% Last Modified by GUIDE v2.5 15-Oct-2013 12:44:50
-
-% Begin initialization code - DO NOT EDIT
 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -181,7 +156,7 @@ Imageg5 = im2double(I5);
 % Imageg4 = rgb2gray(Imaged4); 
 % Imageg5 = rgb2gray(Imaged5); 
 
-% Calculate the Normalized Histogram of Image 1 and Image 2
+% Calculate the Normalized Histogram of Images
 hn1 = imhist(Imageg1)./numel(Imageg1); 
 hn2 = imhist(Imageg2)./numel(Imageg2); 
 hn3 = imhist(Imageg3)./numel(Imageg3); 
@@ -189,7 +164,6 @@ hn4 = imhist(Imageg4)./numel(Imageg4);
 hn5 = imhist(Imageg5)./numel(Imageg5);
 
 axes(handles.axes8);plot(hn1)
-%fprint(hn1);
 axes(handles.axes9);plot(hn2)
 axes(handles.axes10);plot(hn3)
 axes(handles.axes11);plot(hn4)

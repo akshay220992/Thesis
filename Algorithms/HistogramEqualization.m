@@ -1,68 +1,67 @@
 close all;
 clc;
 
-% Image File Read.
-ImageData=imread('11_MG_2735HDR.jpg');
+InputImage=imread('11_MG_2735HDR.jpg');
 
 
 % No. of pixel calculation.
-NoOfPixel=size(ImageData,1)*size(ImageData,2);
+Pixels=size(InputImage,1)*size(InputImage,2);
 
 % Histogram image implementation.
-HistogramImage=uint8(zeros(size(ImageData,1),size(ImageData,2)));
+HistImage=uint8(zeros(size(InputImage,1),size(InputImage,2)));
 
-Frequency=zeros(256,1);
+Freq=zeros(256,1);
 
-ProbabilityFrequency=zeros(256,1);
+ProbabilityFreq=zeros(256,1);
 
 ProbabilityC=zeros(256,1);
 
 Cumulative=zeros(256,1);
 
-OutputZeros=zeros(256,1);
+OpZeros=zeros(256,1);
 
 
 % Cumulative histogram for each and every pixel og image.
-for a=1:size(ImageData,1)
+for x=1:size(InputImage,1)
     
-    for b=1:size(ImageData,2)        
-        FinalValue=ImageData(a,b);
+    for y=1:size(InputImage,2)        
+        Value=InputImage(x,y);
         
-        Frequency(FinalValue+1)=Frequency(FinalValue+1)+1;
+        Freq(Value+1)=Freq(Value+1)+1;
         
-        ProbabilityFrequency(FinalValue+1)=Frequency(FinalValue+1)/NoOfPixel;
+        ProbabilityFreq(Value+1)=Freq(Value+1)/Pixels;
     end
     
 end
 
-FinalSum=0;
+Final_Sum=0;
 
-NumberofBin=255;
+No_bin=255;
 
 
 % Distributation probability for each and every pixel.
-for a=1:size(ProbabilityFrequency)    
-   FinalSum=FinalSum+Frequency(a);
+for x=1:size(ProbabilityFreq)    
+   Final_Sum=Final_Sum+Freq(x);
    
-   Cumulative(a)=FinalSum;
+   Cumulative(x)=Final_Sum;
    
-   ProbabilityC(a)=Cumulative(a)/NoOfPixel;
+   ProbabilityC(x)=Cumulative(x)/Pixels;
    
-   OutputZeros(a)=round(ProbabilityC(a)*NumberofBin);
+   OpZeros(x)=round(ProbabilityC(x)*No_bin);
 end
 
 
 % Final calculation.
-for a=1:size(ImageData,1)
+for x=1:size(InputImage,1)
     
-    for b=1:size(ImageData,2)        
-            HistogramImage(a,b)=OutputZeros(ImageData(a,b)+1);
+    for y=1:size(InputImage,2)        
+            HistImage(x,y)=OpZeros(InputImage(x,y)+1);
     end
     
 end
 
 
-figure,imshow(ImageData);title(' Original Image: ');
-figure,imshow(HistogramImage);title(' Final Image after Histogram Equalization: ');
+figure,imshow(InputImage);title(' Original Image: ');
+figure,imshow(HistImage);title(' Final Image after Histogram Equalization: ');
 %imshowpair(ImageData,HistogramImage,"falsecolor");
-imwrite(HistogramImage,'matlab/OutputImages/Histogram.jpg');
+imwrite(HistImage,'matlab/OutputImages/Histogram.jpg');
