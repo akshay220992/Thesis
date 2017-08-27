@@ -151,23 +151,23 @@ Imageg5 = im2double(I5);
 
 
 % Calculate the Normalized Histogram of Images
-hn1 = imhist(Imageg1)./numel(Imageg1); 
-hn2 = imhist(Imageg2)./numel(Imageg2); 
-hn3 = imhist(Imageg3)./numel(Imageg3); 
-hn4 = imhist(Imageg4)./numel(Imageg4); 
-hn5 = imhist(Imageg5)./numel(Imageg5);
+nh_1 = imhist(Imageg1)./numel(Imageg1); 
+nh_2 = imhist(Imageg2)./numel(Imageg2); 
+nh_3 = imhist(Imageg3)./numel(Imageg3); 
+nh_4 = imhist(Imageg4)./numel(Imageg4); 
+nh_5 = imhist(Imageg5)./numel(Imageg5);
 
-axes(handles.axes8);plot(hn1)
-axes(handles.axes9);plot(hn2)
-axes(handles.axes10);plot(hn3)
-axes(handles.axes11);plot(hn4)
-axes(handles.axes12);plot(hn5)
+axes(handles.axes8);plot(nh_1)
+axes(handles.axes9);plot(nh_2)
+axes(handles.axes10);plot(nh_3)
+axes(handles.axes11);plot(nh_4)
+axes(handles.axes12);plot(nh_5)
 
 % Calculate the histogram error/ Difference
-S1 = sum((hn1 - hn2).^2); 
-S2 = sum((hn1 - hn3).^2); 
-S3 = sum((hn1 - hn4).^2); 
-S4 = sum((hn1 - hn5).^2); 
+S1 = sum((nh_1 - nh_2).^2); 
+S2 = sum((nh_1 - nh_3).^2); 
+S3 = sum((nh_1 - nh_4).^2); 
+S4 = sum((nh_1 - nh_5).^2); 
 
 set(handles.text2,'String',S1)
 set(handles.text3,'String',S2)
