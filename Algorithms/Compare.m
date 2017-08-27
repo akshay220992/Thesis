@@ -1,4 +1,4 @@
-%Code built from snippets from https://uk.mathworks.com%
+%Code built from tutorials and snippets from https://uk.mathworks.com%
 function varargout = Compare(varargin)
 
 gui_Singleton = 1;
