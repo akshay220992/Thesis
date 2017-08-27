@@ -149,12 +149,6 @@ Imageg3 = im2double(I3);
 Imageg4 = im2double(I4);
 Imageg5 = im2double(I5);
 
-% reduce three channel [ RGB ]  to one channel [ grayscale ]
-% Imageg1 = rgb2gray(Imaged1); 
-% Imageg2 = rgb2gray(Imaged2); 
-% Imageg3 = rgb2gray(Imaged3); 
-% Imageg4 = rgb2gray(Imaged4); 
-% Imageg5 = rgb2gray(Imaged5); 
 
 % Calculate the Normalized Histogram of Images
 hn1 = imhist(Imageg1)./numel(Imageg1); 
